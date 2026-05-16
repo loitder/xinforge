@@ -1,6 +1,6 @@
 # Xinforge
 
-A minimal Rust CLI coding agent backed by the [DeepSeek API](https://api.deepseek.com). It runs a conversational tool-calling loop — the model can read/write/edit files, run shell commands, spawn sub-agents, and track tasks with a todo list.
+A minimal Rust CLI coding agent backed by the [OpenAI API](https://api.openai.com). It runs a conversational tool-calling loop — the model can read/write/edit files, run shell commands, spawn sub-agents, and track tasks with a todo list.
 
 ## Quick start
 
@@ -10,9 +10,9 @@ git clone <repo-url> && cd xinforge
 cargo build --release
 
 # Set credentials (or pass via env)
-export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+export OPENAI_BASE_URL="https://api.openai.com/v1"
 export OPENAI_API_KEY="sk-your-key-here"
-export MODEL_ID="deepseek-v4-flash"
+export MODEL_ID="gpt-5.5"
 
 cargo run
 ```
@@ -22,7 +22,7 @@ Type your request at the `>>` prompt. Type `q` or `exit` to quit.
 ## How it works
 
 1. You type a natural-language request.
-2. The agent sends it to DeepSeek with a set of built-in tools.
+2. The agent sends it to OpenAI with a set of built-in tools.
 3. If the model returns tool calls the agent executes them (bash, file I/O, todo, sub-agent spawn, …) and feeds the results back.
 4. The loop continues until the model produces a final text answer.
 
@@ -33,7 +33,7 @@ src/
 ├── main.rs      # CLI entry point, prompt loop
 ├── agent.rs     # Agent orchestrator — tool-call loop,
 │                #   reasoning tracking, compaction
-├── llm.rs       # DeepSeek API client (reqwest + serde_json)
+├── llm.rs       # OpenAI API client (reqwest + serde_json)
 ├── tools.rs     # Tool definitions & implementations
 ├── todo.rs      # Structured todo list tracker
 └── skill.rs     # Skill loader (YAML frontmatter SKILL.md files)
@@ -71,9 +71,9 @@ Skills are injected into the system prompt (descriptions) and loaded on demand v
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `OPENAI_BASE_URL1` | `https://api.deepseek.com/v1` | API base URL |
+| `OPENAI_BASE_URL1` | `https://api.openai.com/v1` | API base URL |
 | `OPENAI_API_KEY1` | — | API key |
-| `MODEL_ID` | `deepseek-v4-flash` | Model to use |
+| `MODEL_ID` | `gpt-5.5` | Model to use |
 
 ## Compaction
 
